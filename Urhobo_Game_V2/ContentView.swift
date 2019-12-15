@@ -331,6 +331,18 @@ struct urhoboDictionary:    View {
     //Variables to add new words to Core Data
     @State private var pictureName = ""
     @State private var urhoboTranslation = ""
+    
+    //Show Field Entry Alet
+    @State private var addWordAlert = false
+    
+    
+    //Fuction to reset string
+          func resetField() {
+               
+              self.pictureName = ""
+              self.urhoboTranslation = ""
+                         
+          } //End funciton to reset file
    
     var body: some View {
         
@@ -346,21 +358,30 @@ struct urhoboDictionary:    View {
             
             
             VStack {
+        
                 TextField("Enter Picture Filename", text: $pictureName)
-                    .autocapitalization(.words)
+                    .autocapitalization(.none)
                     .disableAutocorrection(true)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                 Spacer().frame(height: 10)
                 
                 TextField("Enter Urhobo Translation",text: $urhoboTranslation)
                     .autocapitalization(.words)
                     .disableAutocorrection(true)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                 Spacer().frame(height: 20)
                 
                 
                 
-                
+                    
                 Button("Add") {
                     //Add New Record to CoreData
+                    
+                    if self.pictureName == "" || self.urhoboTranslation == "" {
+                        
+                        self.addWordAlert = true
+                        return
+                    }
                 
                     
                     let word = WordList(context: self.managedObjectContext )
@@ -369,26 +390,44 @@ struct urhoboDictionary:    View {
                   
                     //Save input
                     try? self.managedObjectContext.save()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                       
+                    self.resetField()
                           
-                              
+                    }
                 }//End Button
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(6)
-                
+                    .alert(isPresented: $addWordAlert) {
+                        Alert(title: Text("New Word Message"), message: Text("One or Both Fields Empty"), dismissButton: .default(Text("OK")))
+                }
+
             
             }.padding(.horizontal, 70) //End VStack
+            
+            
+            
                
             
             }//End ZStack
             
         
             .navigationBarTitle(Text("New Word"))
+            
+            
+           
     
         
         }//End Naviation View
+        
+      
     }
+    
+    
+    
 }
 
 struct listDictionary:  View {
@@ -421,6 +460,7 @@ struct listDictionary:  View {
             } //End to List
             
             .navigationBarItems(trailing: EditButton())
+            .navigationBarTitle(Text("Dictionary"))
             
         }//Navigation View
        
