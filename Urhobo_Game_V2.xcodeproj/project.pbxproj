@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0301030423A5841D00F1044F /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301030323A5841D00F1044F /* WordList.swift */; };
 		03FFB3E723A42DB400C8E559 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FFB3E623A42DB400C8E559 /* AppDelegate.swift */; };
 		03FFB3E923A42DB400C8E559 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FFB3E823A42DB400C8E559 /* SceneDelegate.swift */; };
 		03FFB3EC23A42DB400C8E559 /* Urhobo_Game_V2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03FFB3EA23A42DB400C8E559 /* Urhobo_Game_V2.xcdatamodeld */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0301030323A5841D00F1044F /* WordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
 		03FFB3E323A42DB400C8E559 /* Urhobo_Game_V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Urhobo_Game_V2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FFB3E623A42DB400C8E559 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03FFB3E823A42DB400C8E559 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		03FFB3E523A42DB400C8E559 /* Urhobo_Game_V2 */ = {
 			isa = PBXGroup;
 			children = (
+				0301030323A5841D00F1044F /* WordList.swift */,
 				03FFB3E623A42DB400C8E559 /* AppDelegate.swift */,
 				03FFB3E823A42DB400C8E559 /* SceneDelegate.swift */,
 				03FFB3ED23A42DB400C8E559 /* ContentView.swift */,
@@ -153,6 +156,7 @@
 				03FFB3EC23A42DB400C8E559 /* Urhobo_Game_V2.xcdatamodeld in Sources */,
 				03FFB3EE23A42DB400C8E559 /* ContentView.swift in Sources */,
 				03FFB3E923A42DB400C8E559 /* SceneDelegate.swift in Sources */,
+				0301030423A5841D00F1044F /* WordList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

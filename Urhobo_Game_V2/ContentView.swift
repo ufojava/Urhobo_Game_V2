@@ -8,6 +8,9 @@
 
 import SwiftUI
 
+
+
+
 struct ContentView: View {
     
       
@@ -40,6 +43,7 @@ struct ContentView: View {
                     .resizable()
                     .frame(width: 138, height: 138 )
                     .overlay(Rectangle().stroke(lineWidth: 2))
+                    .shadow(radius: 5)
                     Spacer().frame(height: 40)
                             
                 
@@ -59,6 +63,7 @@ struct ContentView: View {
                             .background(Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(6)
+                            .shadow(color: .black, radius: 5)
                             
                             
                         
@@ -74,15 +79,34 @@ struct ContentView: View {
                         
                         NavigationLink(destination: urhoboDictionary()) {
                             
-                            Text("Dictionary  ")
+                            Text("  Add Word ")
                                 .font(.system(size: 20))
                                 .padding()
                                 .background(Color.blue)
                                 .foregroundColor(.white)
                                 .cornerRadius(6)
+                                .shadow(color: .black, radius: 5)
                                
                             
                         }.padding(.vertical, 40)
+                        
+                    }
+                    
+                //Button to list Urhobo Dictionary
+                    Button(action: {}) {
+                        
+                        NavigationLink(destination: listDictionary()) {
+                            
+                            Text(" Dictionary ")
+                                .font(.system(size: 20))
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(6)
+                                .shadow(color: .black, radius: 5)
+                            
+                        }
+                        
                         
                     }
                     
@@ -294,7 +318,23 @@ struct gameBegin:   View {
 }
 
 struct urhoboDictionary:    View {
+    
+    
+    //Property to interact with CoreData
+    @Environment(\.managedObjectContext) var managedObjectContext
+
+   
+    
+    
+  
+    
+    //Variables to add new words to Core Data
+    @State private var pictureName = ""
+    @State private var urhoboTranslation = ""
+   
     var body: some View {
+        
+        NavigationView {
         
         ZStack {
             
@@ -305,10 +345,97 @@ struct urhoboDictionary:    View {
                     .edgesIgnoringSafeArea(.all)
             
             
-                Text("Urhobo Dictionary")
+            VStack {
+                TextField("Enter Picture Filename", text: $pictureName)
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+                Spacer().frame(height: 10)
+                
+                TextField("Enter Urhobo Translation",text: $urhoboTranslation)
+                    .autocapitalization(.words)
+                    .disableAutocorrection(true)
+                Spacer().frame(height: 20)
+                
+                
+                
+                
+                Button("Add") {
+                    //Add New Record to CoreData
+                
+                    
+                    let word = WordList(context: self.managedObjectContext )
+                        word.englishName = self.pictureName
+                        word.urhoboName  = self.urhoboTranslation
+                  
+                    //Save input
+                    try? self.managedObjectContext.save()
+                          
+                              
+                }//End Button
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                
+            
+            }.padding(.horizontal, 70) //End VStack
+               
+            
+            }//End ZStack
+            
+        
+            .navigationBarTitle(Text("New Word"))
+    
+        
+        }//End Naviation View
+    }
+}
+
+struct listDictionary:  View {
+    
+    //Fetch data from coreData
+    //Property to interact with CoreData
+     @Environment(\.managedObjectContext) var managedObjectContext
+     @FetchRequest(entity: WordList.entity(),sortDescriptors: []) var wordList: FetchedResults<WordList>
+    
+     
+    
+    
+    var body: some View {
+        
+        NavigationView {
+    
+            List {
             
             
-        }
+                ForEach(wordList, id: \.self) { word in
+                
+                    Text("\(word.englishName) - \(word.urhoboName)")
+                
+            }
+                
+                //Delete option
+                .onDelete(perform: deleteWord(indexSet:))
+            
+            
+            } //End to List
+            
+            .navigationBarItems(trailing: EditButton())
+            
+        }//Navigation View
+       
+    }
+    
+    //Delete WordList
+    func deleteWord(indexSet:   IndexSet) {
+        
+        let source = indexSet.first!
+        let wordLst = wordList[source]
+        managedObjectContext.delete(wordLst)
+        
+        //Save CoreData
+        try? managedObjectContext.save()
+        
     }
 }
 
